@@ -82,6 +82,35 @@ The compiled binary will be available at `target/release/sheet2dir`.
 
 ---
 
+
+## Google Sheet Structure & Formatting Rules
+
+The application reads data sequentially from the designated range (default: `WORK!A2:I`). For successful parsing and folder generation, your Google Sheet **must** follow this exact 9-column layout in order:
+
+| Column | Header Name | Expected Format / Example | Description |
+| :---: | :--- | :--- | :--- |
+| **A** | `SL` | `1`, `01`, `A-101` | Serial number or tracking identifier. |
+| **B** | `Rec. Date` | `2026-03-07`, `15/04/2026` | Date documents were received. Accepts multiple standard date formats. |
+| **C** | `Client Name` | `John Doe`, `SMITH, MR JOHN` | Client's full name or CSV-formatted name. Title/honorifics (e.g., `MR`, `DR`) are automatically stripped. |
+| **D** | `Passport Summary` | `A12345678`, `A12345678 - 02 Passport` | Primary passport number. Also parses additional passport numbers and explicit quantities. |
+| **E** | `Expire Date` | `2030-12-31`, `N/A` | Passport expiry date. Used to compute validity against the received date. |
+| **F** | `Country` | `USA`, `CAN` | Target destination or country tag. Prepended to directory names (`USA@...`). |
+| **G** | `ROLE` | `SELF`, `HEAD`, `SPONSOR`, `MEMBER` | Applicant's role within a family or case. Defaults to `SELF` if left empty. |
+| **H** | `FAMILY ID` | `FAM-102`, `F-88` | Grouping key. Rows sharing the same non-empty `FAMILY ID` are bundled into a single family case folder. |
+| **I** | `Remarks` | `Pending medicals`, `VFS done` | Additional notes saved directly into `remarks.txt` within the case directory. |
+
+---
+
+### Example Sheet Row Layout
+
+```text
++----+------------+----------------+------------------+-------------+---------+------+-----------+-------------------+
+| A  | B          | C              | D                | E           | F       | G    | H         | I                 |
++----+------------+----------------+------------------+-------------+---------+------+-----------+-------------------+
+| 01 | 2026-03-01 | MR JOHN SMITH  | A12345678 - 02 PP| 2031-05-15  | CANADA  | HEAD | FAM-2026  | Urgent Processing |
++----+------------+----------------+------------------+-------------+---------+------+-----------+-------------------+
+```
+
 ## Usage
 
 Run the executable directly from your terminal. You can specify a custom sheet range as a command-line argument, or let the application prompt you interactively.
