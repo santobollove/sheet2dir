@@ -149,6 +149,12 @@ Contributions, issues, and merge requests are welcome! Please check the [issues 
 
 ---
 
+## Roadmap & Future Enhancements
+
+- [ ] **TODO: Database Persistence** — Add database support (PostgreSQL / SQLite) to log parsed entries, store processing history, and update case statuses directly upon execution.
+- [ ] **TODO: Webhook Notifications** — Trigger real-time notifications (Slack, Discord, or Email) upon successful folder hierarchy generation.
+- [ ] **TODO: Concurrent Case Processing** — Upgrade the Tokio runtime execution to process multiple cases concurrently via `tokio::task::JoinSet`.
+
 ## License
 
 Distributed under the **GNU GENERAL PUBLIC LICENSE v3**. See `LICENSE` for more information.
